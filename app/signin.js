@@ -55,5 +55,77 @@ export default function Signin() {
             Alert.alert('Sign In', response.msg);
         }
     }
-    return
+    return (
+        //View customizada para ajustar o layout do teclao ao campo de entrada de texto
+        <CustomKeyboardView>
+            {/*StatusBar para configurar o estilo da barra de status */}
+            <StatusBar style="dark" />
+            <View style={{ paddingTop: hp(8), paddingHorizontal: wp(5) }} className="flex-1 gap-12">
+                {/*Exibe uma imagem de login no topo da tela */}
+                <View className="items-center">
+                    <Image style={{ height: hp(25) }} resizeMode='contain' source={require('../assets/images/login.png')} />
+                </View>
+
+                {/*Container dos campos de entrada e botões */}
+                <View className="gap-10">
+                    {/*Título da tela de login */}
+                    <Text style={{ fontSize: hp(4) }} className="font-bold tracking-wider text-center text-neutral-800">Sign In</Text>
+
+                    {/*Campos de entrada de email e senha */}
+                    <View className="gap-4">
+                        {/*Campo de entrada de email */}
+                        <View style={{ height: hp(7) }} className="flex-row gap-4 px-4 bg-neutral-100 items-center rounded-xl">
+                            <Octicons name="mail" size={hp(2.7)} color="gray" />
+                            <TextInput
+                                onChanceText={value => emailRef.current = value}
+                                style={{ fontSize: hp(2) }}
+                                className="flex-1 font-semibold text-nautral-700"
+                                placeholder='E-mail'
+                                placeholderTextColor={'gray'}
+                            />
+                        </View>
+
+                        {/* Campo de entrada de senha */}
+                        <View className="gap-3">
+                            <View style={{ height: hp(7) }} className="flex-row gap-4 px-4 bg-neutral-100 items-center rounded-xl">
+                                <Octicons name="lock" size={hp(2.7)} color="gray" />
+                                <TextInput
+                                    onChanceText={value => passwordRef.current = value}
+                                    style={{ fontSize: hp(2) }}
+                                    className="flex-1 font-semibold text-nautral-700"
+                                    placeholder='Senha'
+                                    placeholderTextColor={'gray'}
+                                />
+                            </View>
+                            {/*Link para a funcionalidade de "esqueci minha senha" */}
+                            <Text style={{ fontSize: hp(1.8) }} className="font-semibold text-right text-neutral-500">Esqueceu a senha?</Text>
+                        </View>
+
+                        {/*Botão de envio do formulário de login */}
+                        <View>
+                            {
+                                loading ? (
+                                    <View className="flex-row justify-center">
+                                        <Loading size={hp(6.5)} />
+                                    </View>
+                                ) : (
+                                    <TouchableOpacity onPress={handleLogin} style={{ height: hp(6.5) }} className="bg-indigo-500 rounded-xl justify-center items-center">
+                                        <Text style={{ fontSize: hp(2.7) }} className="text-white font-bold tracking-wider">Sign In</Text>
+                                    </TouchableOpacity>
+                                )
+                            }
+                        </View>
+
+                        {/* Texto para redirecionar o usuário para a tela de registro/cadastro */}
+                        <View className="flex-row justify-center">
+                            <Text style={{ fontSize: hp(1.8) }} className="font-semibold text-neutral-500">Não tem uma conta?</Text>
+                            <Pressable onPress={() => router.push('signup')}>
+                                <Text style={{ fonstSize: hp(1.8) }} className="font-bold text-indigo-500">SIgn Up</Text>
+                            </Pressable>
+                        </View>
+                    </View>
+                </View>
+            </View>
+        </CustomKeyboardView>
+    )
 }
